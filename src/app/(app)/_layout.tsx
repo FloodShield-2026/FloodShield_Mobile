@@ -29,11 +29,10 @@ export default function AppLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: { backgroundColor: colors.backgroundAlt },
-        headerTintColor: colors.text,
-        headerShadowVisible: false,
+        headerShown: false,
+        sceneStyle: { backgroundColor: 'transparent' },
         tabBarStyle: {
-          backgroundColor: colors.backgroundAlt,
+          backgroundColor: 'rgba(10, 22, 40, 0.92)',
           borderTopColor: colors.border,
         },
         tabBarActiveTintColor: colors.primary,
