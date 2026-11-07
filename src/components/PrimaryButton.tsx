@@ -49,25 +49,31 @@ export function PrimaryButton({
 
 const styles = StyleSheet.create({
   base: {
-    minHeight: 52,
-    borderRadius: 14,
+    minHeight: 54,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing.lg,
   },
   primary: {
     backgroundColor: colors.primary,
+    shadowColor: colors.primary,
+    shadowOpacity: 0.35,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 5,
   },
   ghost: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(23, 48, 73, 0.55)',
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: 'rgba(0, 180, 255, 0.28)',
   },
   danger: {
     backgroundColor: colors.danger,
   },
   pressed: {
     opacity: 0.88,
+    transform: [{ scale: 0.985 }],
   },
   disabled: {
     opacity: 0.5,
@@ -75,6 +81,7 @@ const styles = StyleSheet.create({
   label: {
     color: colors.text,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '800',
+    letterSpacing: 0.2,
   },
 });

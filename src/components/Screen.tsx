@@ -48,12 +48,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scroll: {
-    paddingBottom: spacing.xl,
+    paddingBottom: 110,
   },
   body: {
     flex: 1,
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.md,
+    paddingBottom: 96,
     gap: spacing.md,
   },
 });
