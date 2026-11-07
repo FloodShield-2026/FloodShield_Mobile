@@ -25,6 +25,7 @@ export function PrimaryButton({
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={label}
       disabled={isDisabled}
       style={({ pressed }) => [
         styles.base,

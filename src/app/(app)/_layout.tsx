@@ -32,7 +32,7 @@ export default function AppLayout() {
         headerShown: false,
         sceneStyle: { backgroundColor: 'transparent' },
         tabBarStyle: {
-          backgroundColor: 'rgba(10, 22, 40, 0.92)',
+          backgroundColor: 'rgba(10, 22, 40, 0.94)',
           borderTopColor: colors.border,
         },
         tabBarActiveTintColor: colors.primary,
@@ -47,7 +47,7 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="occurrences/index"
+        name="occurrences"
         options={{
           title: 'Ocorrências',
           tabBarLabel: ({ focused }) => <TabLabel label="Ocorrências" focused={focused} />,
@@ -74,18 +74,7 @@ export default function AppLayout() {
           tabBarLabel: ({ focused }) => <TabLabel label="Sobre" focused={focused} />,
         }}
       />
-      <Tabs.Screen
-        name="occurrences/new"
-        options={{ href: null, title: 'Nova ocorrência' }}
-      />
-      <Tabs.Screen
-        name="occurrences/[id]"
-        options={{ href: null, title: 'Detalhe' }}
-      />
-      <Tabs.Screen
-        name="action-plan"
-        options={{ href: null, title: 'Plano de ação' }}
-      />
+      <Tabs.Screen name="action-plan" options={{ href: null, title: 'Plano de ação' }} />
     </Tabs>
   );
 }

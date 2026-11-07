@@ -1,13 +1,14 @@
 import { Link, router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { BrandBackground } from '@/components/BrandBackground';
 import { BrandMark } from '@/components/BrandMark';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { TextField } from '@/components/TextField';
 import { useAuth } from '@/contexts/AuthContext';
+import { showAlert } from '@/utils/alert';
 import { colors, spacing } from '@/theme/colors';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginScreen() {
   const { signIn } = useAuth();
@@ -16,12 +17,17 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
 
   async function handleLogin() {
+    if (!email.trim() || !password) {
+      showAlert('Campos obrigatórios', 'Informe e-mail e senha.');
+      return;
+    }
+
     try {
       setLoading(true);
       await signIn(email.trim(), password);
       router.replace('/(app)/home');
     } catch (error) {
-      Alert.alert('Falha no login', error instanceof Error ? error.message : 'Tente novamente.');
+      showAlert('Falha no login', error instanceof Error ? error.message : 'Tente novamente.');
     } finally {
       setLoading(false);
     }

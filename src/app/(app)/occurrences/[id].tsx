@@ -1,12 +1,13 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { Screen } from '@/components/Screen';
 import { TextField } from '@/components/TextField';
 import { useAuth } from '@/contexts/AuthContext';
 import * as occurrenceService from '@/services/occurrenceService';
 import type { Occurrence } from '@/types/models';
+import { showAlert } from '@/utils/alert';
 import { colors, spacing } from '@/theme/colors';
 
 export default function OccurrenceDetailScreen() {
@@ -22,6 +23,8 @@ export default function OccurrenceDetailScreen() {
       try {
         const found = await occurrenceService.getOccurrence(String(id), user.id);
         setItem(found ?? null);
+      } catch (error) {
+        showAlert('Erro', error instanceof Error ? error.message : 'Falha ao carregar.');
       } finally {
         setLoading(false);
       }
@@ -34,17 +37,17 @@ export default function OccurrenceDetailScreen() {
       setSaving(true);
       const updated = await occurrenceService.updateOccurrence(user.id, item.id, item);
       setItem(updated);
-      Alert.alert('Salvo', 'Ocorrência atualizada.');
+      showAlert('Salvo', 'Ocorrência atualizada.');
     } catch (error) {
-      Alert.alert('Erro', error instanceof Error ? error.message : 'Falha ao atualizar.');
+      showAlert('Erro', error instanceof Error ? error.message : 'Falha ao atualizar.');
     } finally {
       setSaving(false);
     }
   }
 
-  async function handleDelete() {
+  function handleDelete() {
     if (!user || !item) return;
-    Alert.alert('Excluir', 'Deseja remover esta ocorrência?', [
+    showAlert('Excluir', 'Deseja remover esta ocorrência?', [
       { text: 'Cancelar', style: 'cancel' },
       {
         text: 'Excluir',
@@ -59,7 +62,7 @@ export default function OccurrenceDetailScreen() {
 
   if (loading) {
     return (
-      <Screen>
+      <Screen title="Detalhe">
         <ActivityIndicator color={colors.primary} />
       </Screen>
     );
@@ -112,6 +115,7 @@ export default function OccurrenceDetailScreen() {
           }
         />
         <PrimaryButton label="Excluir" variant="danger" onPress={handleDelete} />
+        <PrimaryButton label="Voltar" variant="ghost" onPress={() => router.back()} />
       </View>
     </Screen>
   );

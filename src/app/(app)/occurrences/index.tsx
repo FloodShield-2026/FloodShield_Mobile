@@ -8,11 +8,13 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Card } from '@/components/Card';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { Screen } from '@/components/Screen';
 import { useAuth } from '@/contexts/AuthContext';
 import * as occurrenceService from '@/services/occurrenceService';
 import type { Occurrence } from '@/types/models';
+import { showAlert } from '@/utils/alert';
 import { colors, spacing } from '@/theme/colors';
 
 export default function OccurrencesScreen() {
@@ -25,6 +27,8 @@ export default function OccurrencesScreen() {
     setLoading(true);
     try {
       setItems(await occurrenceService.listOccurrences(user.id));
+    } catch (error) {
+      showAlert('Erro', error instanceof Error ? error.message : 'Falha ao carregar ocorrências.');
     } finally {
       setLoading(false);
     }
@@ -37,28 +41,38 @@ export default function OccurrencesScreen() {
   );
 
   return (
-    <Screen title="Ocorrências" subtitle="CRUD consumindo a API Java (mock local até o backend subir).">
+    <Screen
+      title="Ocorrências"
+      subtitle="CRUD completo: criar, listar, editar e excluir registros de alagamento."
+    >
       <PrimaryButton label="Nova ocorrência" onPress={() => router.push('/(app)/occurrences/new')} />
       {loading ? (
         <ActivityIndicator color={colors.primary} style={{ marginTop: spacing.lg }} />
       ) : (
         <FlatList
+          style={styles.list}
           data={items}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ gap: spacing.sm, paddingBottom: spacing.xl }}
-          ListEmptyComponent={<Text style={styles.empty}>Nenhuma ocorrência ainda.</Text>}
+          contentContainerStyle={styles.listContent}
+          ListEmptyComponent={
+            <Card>
+              <Text style={styles.empty}>Nenhuma ocorrência ainda. Registre o primeiro alagamento.</Text>
+            </Card>
+          }
           renderItem={({ item }) => (
             <Pressable
-              style={styles.card}
+              style={({ pressed }) => [pressed && styles.pressed]}
               onPress={() => router.push(`/(app)/occurrences/${item.id}`)}
             >
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.meta}>
-                {item.neighborhood} · {item.waterLevelCm} cm · {item.status}
-              </Text>
-              <Text style={styles.desc} numberOfLines={2}>
-                {item.description}
-              </Text>
+              <Card>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.meta}>
+                  {item.neighborhood} · {item.waterLevelCm} cm · {item.status}
+                </Text>
+                <Text style={styles.desc} numberOfLines={2}>
+                  {item.description}
+                </Text>
+              </Card>
             </Pressable>
           )}
         />
@@ -68,18 +82,19 @@ export default function OccurrencesScreen() {
 }
 
 const styles = StyleSheet.create({
+  list: {
+    flex: 1,
+  },
+  listContent: {
+    gap: spacing.sm,
+    paddingBottom: spacing.xl,
+  },
   empty: {
     color: colors.textMuted,
     textAlign: 'center',
-    marginTop: spacing.lg,
   },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-    gap: 6,
+  pressed: {
+    opacity: 0.9,
   },
   title: {
     color: colors.text,

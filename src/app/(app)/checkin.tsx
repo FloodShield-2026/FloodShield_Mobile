@@ -1,9 +1,11 @@
-import { useRef, useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Card } from '@/components/Card';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { Screen } from '@/components/Screen';
 import { TextField } from '@/components/TextField';
 import * as checkInService from '@/services/checkInService';
+import { showAlert } from '@/utils/alert';
 import { colors, spacing } from '@/theme/colors';
 
 function createIdempotencyKey() {
@@ -11,10 +13,10 @@ function createIdempotencyKey() {
 }
 
 export default function CheckInScreen() {
-  const keyRef = useRef(createIdempotencyKey());
+  const [idempotencyKey, setIdempotencyKey] = useState(createIdempotencyKey);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [lastResult, setLastResult] = useState<string>('');
+  const [lastResult, setLastResult] = useState('');
 
   async function send(status: 'SEGURO' | 'PRECISO_AJUDA') {
     try {
@@ -22,7 +24,7 @@ export default function CheckInScreen() {
       const result = await checkInService.submitCheckIn({
         status,
         message: message.trim() || undefined,
-        idempotencyKey: keyRef.current,
+        idempotencyKey,
       });
       setLastResult(
         result.duplicated
@@ -30,16 +32,40 @@ export default function CheckInScreen() {
           : `Registrado ${result.status} · ${result.id}`,
       );
       if (!result.duplicated) {
-        keyRef.current = createIdempotencyKey();
+        setIdempotencyKey(createIdempotencyKey());
       }
-      Alert.alert(
+      showAlert(
         result.duplicated ? 'Já enviado' : 'Check-in ok',
         result.duplicated
           ? 'A mesma chave de idempotência não criou outro pedido.'
-          : 'Seu status foi enviado à API .NET (ou mock local).',
+          : 'Seu status foi registrado com sucesso.',
       );
     } catch (error) {
-      Alert.alert('Erro', error instanceof Error ? error.message : 'Falha no check-in.');
+      showAlert('Erro', error instanceof Error ? error.message : 'Falha no check-in.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function simulateDuplicate() {
+    try {
+      setLoading(true);
+      const fixed = idempotencyKey;
+      await checkInService.submitCheckIn({
+        status: 'PRECISO_AJUDA',
+        idempotencyKey: fixed,
+      });
+      const second = await checkInService.submitCheckIn({
+        status: 'PRECISO_AJUDA',
+        idempotencyKey: fixed,
+      });
+      const text = second.duplicated
+        ? 'Segundo toque bloqueado pela idempotência.'
+        : 'Falha: segundo toque criou outro registro.';
+      setLastResult(text);
+      showAlert('Teste de idempotência', text);
+    } catch (error) {
+      showAlert('Erro', error instanceof Error ? error.message : 'Falha no teste.');
     } finally {
       setLoading(false);
     }
@@ -58,12 +84,13 @@ export default function CheckInScreen() {
           onChangeText={setMessage}
           placeholder="Ex.: Estou no 2º andar, água na garagem"
         />
-        <Text style={styles.key}>Chave atual: {keyRef.current}</Text>
-        <PrimaryButton
-          label="Estou seguro"
-          loading={loading}
-          onPress={() => send('SEGURO')}
-        />
+        <Card>
+          <Text style={styles.keyLabel}>Chave de idempotência</Text>
+          <Text selectable style={styles.key}>
+            {idempotencyKey}
+          </Text>
+        </Card>
+        <PrimaryButton label="Estou seguro" loading={loading} onPress={() => send('SEGURO')} />
         <PrimaryButton
           label="Preciso de ajuda"
           variant="danger"
@@ -74,22 +101,7 @@ export default function CheckInScreen() {
           label="Simular toque repetido (mesma chave)"
           variant="ghost"
           loading={loading}
-          onPress={async () => {
-            const fixed = keyRef.current;
-            await checkInService.submitCheckIn({
-              status: 'PRECISO_AJUDA',
-              idempotencyKey: fixed,
-            });
-            const second = await checkInService.submitCheckIn({
-              status: 'PRECISO_AJUDA',
-              idempotencyKey: fixed,
-            });
-            setLastResult(
-              second.duplicated
-                ? 'Segundo toque bloqueado pela idempotência.'
-                : 'Falha: segundo toque criou outro registro.',
-            );
-          }}
+          onPress={simulateDuplicate}
         />
         {lastResult ? <Text style={styles.result}>{lastResult}</Text> : null}
       </View>
@@ -101,9 +113,15 @@ const styles = StyleSheet.create({
   form: {
     gap: spacing.md,
   },
-  key: {
-    color: colors.textDim,
+  keyLabel: {
+    color: colors.textMuted,
     fontSize: 12,
+    fontWeight: '700',
+  },
+  key: {
+    color: colors.primarySoft,
+    fontSize: 12,
+    fontFamily: 'monospace',
   },
   result: {
     color: colors.primarySoft,

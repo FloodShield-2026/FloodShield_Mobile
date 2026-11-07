@@ -8,14 +8,22 @@ const USERS_KEY = 'floodshield.mock.users';
 
 type StoredUser = User & { password: string };
 
+const DEMO: StoredUser = { ...demoUser, password: '123456' };
+
 async function readUsers(): Promise<StoredUser[]> {
   const raw = await AsyncStorage.getItem(USERS_KEY);
   if (!raw) {
-    const seed: StoredUser = { ...demoUser, password: '123456' };
-    await AsyncStorage.setItem(USERS_KEY, JSON.stringify([seed]));
-    return [seed];
+    await AsyncStorage.setItem(USERS_KEY, JSON.stringify([DEMO]));
+    return [DEMO];
   }
-  return JSON.parse(raw) as StoredUser[];
+
+  const users = JSON.parse(raw) as StoredUser[];
+  if (!users.some((u) => u.email.toLowerCase() === DEMO.email.toLowerCase())) {
+    const next = [DEMO, ...users];
+    await AsyncStorage.setItem(USERS_KEY, JSON.stringify(next));
+    return next;
+  }
+  return users;
 }
 
 async function writeUsers(users: StoredUser[]) {

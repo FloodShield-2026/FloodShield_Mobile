@@ -10,7 +10,7 @@ type Props = {
 const SIZES = {
   sm: 36,
   md: 72,
-  lg: 148,
+  lg: 112,
 } as const;
 
 export function BrandMark({ size = 'md', showWordmark = false, style }: Props) {

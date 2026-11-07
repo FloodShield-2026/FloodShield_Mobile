@@ -55,7 +55,7 @@ export function BrandBackground({ children, style, dim = true }: Props) {
 const styles = StyleSheet.create({
   root: {
     backgroundColor: colors.background,
-    overflow: 'hidden',
+    overflow: Platform.OS === 'web' ? 'scroll' : 'hidden',
   },
   image: {
     ...StyleSheet.absoluteFill,
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: '100%',
-    height: '100%',
+    minHeight: '100%',
     zIndex: 1,
   },
 });
+

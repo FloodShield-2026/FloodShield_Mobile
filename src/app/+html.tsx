@@ -18,7 +18,7 @@ export default function Root({ children }: PropsWithChildren) {
                 margin: 0 !important;
                 padding: 0 !important;
                 background-color: #0A1628 !important;
-                overflow: hidden !important;
+                overflow: auto !important;
               }
               body {
                 display: flex !important;

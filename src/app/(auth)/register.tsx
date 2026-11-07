@@ -1,12 +1,13 @@
 import { Link, router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BrandBackground } from '@/components/BrandBackground';
 import { BrandMark } from '@/components/BrandMark';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { TextField } from '@/components/TextField';
 import { useAuth } from '@/contexts/AuthContext';
+import { showAlert } from '@/utils/alert';
 import { colors, spacing } from '@/theme/colors';
 
 export default function RegisterScreen() {
@@ -18,7 +19,7 @@ export default function RegisterScreen() {
 
   async function handleRegister() {
     if (!name.trim() || !email.trim() || password.length < 6) {
-      Alert.alert('Dados inválidos', 'Preencha nome, e-mail e senha com ao menos 6 caracteres.');
+      showAlert('Dados inválidos', 'Preencha nome, e-mail e senha com ao menos 6 caracteres.');
       return;
     }
 
@@ -27,7 +28,7 @@ export default function RegisterScreen() {
       await signUp(name.trim(), email.trim(), password);
       router.replace('/(app)/home');
     } catch (error) {
-      Alert.alert('Falha no cadastro', error instanceof Error ? error.message : 'Tente novamente.');
+      showAlert('Falha no cadastro', error instanceof Error ? error.message : 'Tente novamente.');
     } finally {
       setLoading(false);
     }

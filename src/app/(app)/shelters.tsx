@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native';
+import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
 import * as shelterService from '@/services/shelterService';
 import type { Shelter } from '@/types/models';
+import { showAlert } from '@/utils/alert';
 import { colors, spacing } from '@/theme/colors';
 
 export default function SheltersScreen() {
@@ -13,6 +15,8 @@ export default function SheltersScreen() {
     (async () => {
       try {
         setItems(await shelterService.listShelters());
+      } catch (error) {
+        showAlert('Erro', error instanceof Error ? error.message : 'Falha ao carregar abrigos.');
       } finally {
         setLoading(false);
       }
@@ -25,17 +29,18 @@ export default function SheltersScreen() {
         <ActivityIndicator color={colors.primary} />
       ) : (
         <FlatList
+          style={styles.list}
           data={items}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={{ gap: spacing.sm, paddingBottom: spacing.xl }}
+          contentContainerStyle={styles.listContent}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <Card>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.address}>{item.address}</Text>
               <Text style={[styles.badge, item.open ? styles.open : styles.closed]}>
                 {item.open ? `Aberto · ${item.availableSlots} vagas` : 'Temporariamente fechado'}
               </Text>
-            </View>
+            </Card>
           )}
         />
       )}
@@ -44,13 +49,12 @@ export default function SheltersScreen() {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-    gap: 6,
+  list: {
+    flex: 1,
+  },
+  listContent: {
+    gap: spacing.sm,
+    paddingBottom: spacing.xl,
   },
   name: {
     color: colors.text,

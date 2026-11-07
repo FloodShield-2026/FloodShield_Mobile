@@ -57,13 +57,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     paddingHorizontal: spacing.lg,
-    paddingTop: 72,
+    paddingTop: 48,
     paddingBottom: spacing.xl,
   },
   hero: {
-    gap: spacing.md,
+    gap: spacing.sm,
     alignItems: 'center',
   },
+
   tagline: {
     color: colors.primarySoft,
     fontSize: 13,

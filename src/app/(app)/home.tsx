@@ -1,5 +1,6 @@
 import { router } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
+import { Card } from '@/components/Card';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { Screen } from '@/components/Screen';
 import { useAuth } from '@/contexts/AuthContext';
@@ -22,13 +23,13 @@ export default function HomeScreen() {
       subtitle="FloodShield acompanha o nível da rua e te guia antes da água chegar na porta."
       scroll
     >
-      <View style={styles.card}>
+      <Card>
         <Text style={styles.cardEyebrow}>STATUS DA REGIÃO</Text>
         <Text style={styles.cardTitle}>Atenção moderada</Text>
         <Text style={styles.cardCopy}>
           Chuva forte prevista. Monitore ocorrências próximas e deixe o kit pronto.
         </Text>
-      </View>
+      </Card>
 
       <View style={styles.list}>
         {FEATURES.map((item) => (
@@ -44,20 +45,19 @@ export default function HomeScreen() {
         variant="ghost"
         onPress={() => router.push('/(app)/action-plan')}
       />
-      <PrimaryButton label="Sair" variant="ghost" onPress={() => signOut()} />
+      <PrimaryButton
+        label="Sair"
+        variant="ghost"
+        onPress={async () => {
+          await signOut();
+          router.replace('/(auth)/login');
+        }}
+      />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderWidth: 1,
-    borderRadius: 18,
-    padding: spacing.lg,
-    gap: spacing.sm,
-  },
   cardEyebrow: {
     color: colors.primarySoft,
     fontSize: 12,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   pill: {
-    backgroundColor: colors.surfaceElevated,
+    backgroundColor: 'rgba(23, 48, 73, 0.9)',
     borderRadius: 999,
     paddingVertical: 10,
     paddingHorizontal: spacing.md,
