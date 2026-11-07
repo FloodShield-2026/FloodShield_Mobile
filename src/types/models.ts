@@ -31,8 +31,13 @@ export type Shelter = {
   id: string;
   name: string;
   address: string;
+  neighborhood: string;
+  latitude?: number;
+  longitude?: number;
   availableSlots: number;
   open: boolean;
+  distanceKm?: number;
+  matchedNeighborhood?: boolean;
 };
 
 export type ActionPlan = {

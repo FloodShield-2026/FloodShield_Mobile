@@ -24,8 +24,13 @@ type JavaShelter = {
   id: number | string;
   name: string;
   address: string;
+  neighborhood?: string;
+  latitude?: number | null;
+  longitude?: number | null;
   availableSlots: number;
   open: boolean;
+  distanceKm?: number | null;
+  matchedNeighborhood?: boolean;
 };
 
 type JavaActionPlan = {
@@ -74,8 +79,13 @@ export function mapShelter(item: JavaShelter): Shelter {
     id: String(item.id),
     name: item.name,
     address: item.address,
+    neighborhood: item.neighborhood ?? '',
+    latitude: item.latitude ?? undefined,
+    longitude: item.longitude ?? undefined,
     availableSlots: item.availableSlots,
     open: item.open,
+    distanceKm: item.distanceKm ?? undefined,
+    matchedNeighborhood: item.matchedNeighborhood ?? false,
   };
 }
 
