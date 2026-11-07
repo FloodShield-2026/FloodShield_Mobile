@@ -1,8 +1,10 @@
 import { Link, router } from 'expo-router';
 import { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { BrandBackground } from '@/components/BrandBackground';
+import { BrandMark } from '@/components/BrandMark';
 import { PrimaryButton } from '@/components/PrimaryButton';
-import { Screen } from '@/components/Screen';
 import { TextField } from '@/components/TextField';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors, spacing } from '@/theme/colors';
@@ -32,33 +34,57 @@ export default function RegisterScreen() {
   }
 
   return (
-    <Screen title="Criar conta" subtitle="Cadastro de cidadão para alertas e ocorrências." scroll>
-      <View style={styles.form}>
-        <TextField label="Nome completo" value={name} onChangeText={setName} />
-        <TextField
-          label="E-mail"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextField
-          label="Senha"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <PrimaryButton label="Cadastrar" loading={loading} onPress={handleRegister} />
-        <Link href="/(auth)/login" style={styles.link}>
-          Já tenho conta
-        </Link>
-      </View>
-    </Screen>
+    <BrandBackground dim={false}>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.container}>
+          <BrandMark size="md" showWordmark />
+          <Text style={styles.subtitle}>Crie sua conta de cidadão no FloodShield.</Text>
+
+          <View style={styles.form}>
+            <TextField label="Nome completo" value={name} onChangeText={setName} />
+            <TextField
+              label="E-mail"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextField
+              label="Senha"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
+            <PrimaryButton label="Cadastrar" loading={loading} onPress={handleRegister} />
+            <Link href="/(auth)/login" style={styles.link}>
+              Já tenho conta
+            </Link>
+          </View>
+        </View>
+      </SafeAreaView>
+    </BrandBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xl,
+    gap: spacing.md,
+    alignItems: 'center',
+  },
+  subtitle: {
+    color: colors.textMuted,
+    textAlign: 'center',
+    fontSize: 15,
+    lineHeight: 22,
+  },
   form: {
+    width: '100%',
     gap: spacing.md,
     marginTop: spacing.md,
   },

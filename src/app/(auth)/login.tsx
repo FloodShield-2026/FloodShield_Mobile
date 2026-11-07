@@ -1,11 +1,13 @@
 import { Link, router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
+import { BrandBackground } from '@/components/BrandBackground';
+import { BrandMark } from '@/components/BrandMark';
 import { PrimaryButton } from '@/components/PrimaryButton';
-import { Screen } from '@/components/Screen';
 import { TextField } from '@/components/TextField';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors, spacing } from '@/theme/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginScreen() {
   const { signIn } = useAuth();
@@ -26,37 +28,58 @@ export default function LoginScreen() {
   }
 
   return (
-    <Screen
-      title="Entrar"
-      subtitle="Acesse sua conta FloodShield para monitorar a rua e receber o plano de ação."
-      scroll
-    >
-      <View style={styles.form}>
-        <TextField
-          label="E-mail"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextField
-          label="Senha"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <PrimaryButton label="Entrar" loading={loading} onPress={handleLogin} />
-        <Text style={styles.hint}>Demo: cidadao@floodshield.app / 123456</Text>
-        <Link href="/(auth)/register" style={styles.link}>
-          Ainda não tem conta? Cadastre-se
-        </Link>
-      </View>
-    </Screen>
+    <BrandBackground dim={false}>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.container}>
+          <BrandMark size="lg" showWordmark />
+          <Text style={styles.subtitle}>Entre para monitorar sua região e receber alertas.</Text>
+
+          <View style={styles.form}>
+            <TextField
+              label="E-mail"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextField
+              label="Senha"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
+            <PrimaryButton label="Entrar" loading={loading} onPress={handleLogin} />
+            <Text style={styles.hint}>Demo: cidadao@floodshield.app / 123456</Text>
+            <Link href="/(auth)/register" style={styles.link}>
+              Ainda não tem conta? Cadastre-se
+            </Link>
+          </View>
+        </View>
+      </SafeAreaView>
+    </BrandBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xl,
+    gap: spacing.md,
+    alignItems: 'center',
+  },
+  subtitle: {
+    color: colors.textMuted,
+    textAlign: 'center',
+    fontSize: 15,
+    lineHeight: 22,
+    maxWidth: 320,
+  },
   form: {
+    width: '100%',
     gap: spacing.md,
     marginTop: spacing.md,
   },

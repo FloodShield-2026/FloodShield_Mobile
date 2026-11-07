@@ -1,6 +1,7 @@
 import { Redirect, router } from 'expo-router';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { BrandBackground } from '@/components/BrandBackground';
+import { BrandMark } from '@/components/BrandMark';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors, spacing } from '@/theme/colors';
@@ -26,12 +27,10 @@ export default function WelcomeScreen() {
     <BrandBackground dim={false}>
       <View style={styles.container}>
         <View style={styles.hero}>
-          <Image source={require('../../assets/brand/logo.png')} style={styles.logo} />
-          <Text style={styles.brand}>FloodShield</Text>
+          <BrandMark size="lg" showWordmark />
           <Text style={styles.tagline}>PREDICT. PROTECT. SAVE LIVES.</Text>
           <Text style={styles.copy}>
-            A marca d&apos;água da rua no seu celular: nível de risco, plano de ação e caminho até o
-            abrigo antes da enchente chegar na porta.
+            Antecipe o risco de enchente, receba o plano de ação e encontre o abrigo mais próximo.
           </Text>
         </View>
 
@@ -64,17 +63,6 @@ const styles = StyleSheet.create({
   hero: {
     gap: spacing.md,
     alignItems: 'center',
-  },
-  logo: {
-    width: 132,
-    height: 132,
-    borderRadius: 28,
-  },
-  brand: {
-    color: colors.text,
-    fontSize: 36,
-    fontWeight: '800',
-    letterSpacing: 0.5,
   },
   tagline: {
     color: colors.primarySoft,

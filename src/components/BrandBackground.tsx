@@ -1,4 +1,12 @@
-import { Image, Platform, StyleSheet, useWindowDimensions, View, type StyleProp, type ViewStyle } from 'react-native';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '@/theme/colors';
 
@@ -18,12 +26,14 @@ export function BrandBackground({ children, style, dim = true }: Props) {
         {
           width,
           minHeight: height,
-          ...(Platform.OS === 'web' ? { height, position: 'fixed' as const, inset: 0 } : { flex: 1 }),
+          ...(Platform.OS === 'web'
+            ? { height, position: 'fixed' as const, top: 0, left: 0, right: 0, bottom: 0 }
+            : { flex: 1 }),
         },
       ]}
     >
       <Image
-        source={require('../../assets/brand/hero.png')}
+        source={require('../../assets/brand/background.png')}
         style={styles.image}
         resizeMode="cover"
         accessibilityIgnoresInvertColors
@@ -31,8 +41,8 @@ export function BrandBackground({ children, style, dim = true }: Props) {
       <LinearGradient
         colors={
           dim
-            ? ['rgba(5,14,28,0.45)', 'rgba(5,14,28,0.72)', 'rgba(5,14,28,0.88)']
-            : ['rgba(5,14,28,0.15)', 'rgba(5,14,28,0.4)', 'rgba(5,14,28,0.7)']
+            ? ['rgba(3,10,22,0.35)', 'rgba(3,10,22,0.62)', 'rgba(3,10,22,0.88)']
+            : ['rgba(3,10,22,0.12)', 'rgba(3,10,22,0.38)', 'rgba(3,10,22,0.72)']
         }
         style={StyleSheet.absoluteFill}
         pointerEvents="none"

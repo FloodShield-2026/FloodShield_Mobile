@@ -1,4 +1,5 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { BrandMark } from '@/components/BrandMark';
 import { Screen } from '@/components/Screen';
 import { APP_COMMIT_HASH, TEAM, USE_MOCK_APIS } from '@/constants/config';
 import { colors, spacing } from '@/theme/colors';
@@ -11,9 +12,7 @@ export default function AboutScreen() {
       scroll
     >
       <View style={styles.card}>
-        <Image source={require('../../../assets/brand/logo.png')} style={styles.logo} />
-        <Text style={styles.brand}>FloodShield</Text>
-        <Text style={styles.tagline}>Predict. Protect. Save Lives.</Text>
+        <BrandMark size="md" showWordmark />
         <Text style={styles.hashLabel}>Commit de referência</Text>
         <Text selectable style={styles.hash}>
           {APP_COMMIT_HASH}
@@ -37,7 +36,7 @@ export default function AboutScreen() {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.surface,
+    backgroundColor: 'rgba(18, 38, 58, 0.82)',
     borderRadius: 18,
     borderWidth: 1,
     borderColor: colors.border,
@@ -45,27 +44,12 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     alignItems: 'center',
   },
-  logo: {
-    width: 96,
-    height: 96,
-    borderRadius: 20,
-    marginBottom: spacing.sm,
-  },
-  brand: {
-    color: colors.text,
-    fontSize: 24,
-    fontWeight: '800',
-  },
-  tagline: {
-    color: colors.primarySoft,
-    fontWeight: '700',
-    marginBottom: spacing.sm,
-  },
   hashLabel: {
     color: colors.textMuted,
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 1,
+    marginTop: spacing.sm,
   },
   hash: {
     color: colors.warning,
