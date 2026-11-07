@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USE_MOCK_APIS } from '@/constants/config';
 import { javaApi } from '@/services/apiClient';
+import { mapOccurrence, mapOccurrencePage } from '@/services/mappers';
 import { seedOccurrences } from '@/services/mockData';
 import type { Occurrence, OccurrenceStatus } from '@/types/models';
 
@@ -22,8 +23,8 @@ async function writeAll(items: Occurrence[]) {
 
 export async function listOccurrences(userId: string): Promise<Occurrence[]> {
   if (!USE_MOCK_APIS) {
-    const { data } = await javaApi.get<Occurrence[]>('/ocorrencias');
-    return data;
+    const { data } = await javaApi.get('/ocorrencias');
+    return mapOccurrencePage(data);
   }
   const all = await readAll(userId);
   return all.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
@@ -31,8 +32,8 @@ export async function listOccurrences(userId: string): Promise<Occurrence[]> {
 
 export async function getOccurrence(id: string, userId: string): Promise<Occurrence | undefined> {
   if (!USE_MOCK_APIS) {
-    const { data } = await javaApi.get<Occurrence>(`/ocorrencias/${id}`);
-    return data;
+    const { data } = await javaApi.get(`/ocorrencias/${id}`);
+    return mapOccurrence(data);
   }
   return (await readAll(userId)).find((item) => item.id === id);
 }
@@ -44,8 +45,15 @@ export async function createOccurrence(
   },
 ): Promise<Occurrence> {
   if (!USE_MOCK_APIS) {
-    const { data } = await javaApi.post<Occurrence>('/ocorrencias', input);
-    return data;
+    const { data } = await javaApi.post('/ocorrencias', {
+      title: input.title,
+      description: input.description,
+      neighborhood: input.neighborhood,
+      waterLevelCm: input.waterLevelCm,
+      latitude: input.latitude,
+      longitude: input.longitude,
+    });
+    return mapOccurrence(data);
   }
 
   const all = await readAll(userId);
@@ -71,8 +79,16 @@ export async function updateOccurrence(
   patch: Partial<Occurrence>,
 ): Promise<Occurrence> {
   if (!USE_MOCK_APIS) {
-    const { data } = await javaApi.put<Occurrence>(`/ocorrencias/${id}`, patch);
-    return data;
+    const { data } = await javaApi.put(`/ocorrencias/${id}`, {
+      title: patch.title,
+      description: patch.description,
+      neighborhood: patch.neighborhood,
+      waterLevelCm: patch.waterLevelCm,
+      latitude: patch.latitude,
+      longitude: patch.longitude,
+      status: patch.status,
+    });
+    return mapOccurrence(data);
   }
 
   const all = await readAll(userId);

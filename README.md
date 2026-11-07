@@ -55,12 +55,19 @@ Conta demo (mock): `cidadao@floodshield.app` / `123456`
 Copie `.env.example` para `.env`:
 
 ```bash
-EXPO_PUBLIC_JAVA_API_URL=https://sua-api-java.azurewebsites.net
-EXPO_PUBLIC_DOTNET_API_URL=https://sua-api-dotnet.azurewebsites.net
+# Local enquanto a API Java roda na sua máquina
+EXPO_PUBLIC_JAVA_API_URL=http://localhost:8080
+
+# Quando o DevOps publicar no Azure, troque pela URL pública
+# EXPO_PUBLIC_JAVA_API_URL=https://floodshield-api.azurewebsites.net
+
+EXPO_PUBLIC_DOTNET_API_URL=
 EXPO_PUBLIC_GIT_COMMIT=<sha>
 ```
 
-Sem `EXPO_PUBLIC_JAVA_API_URL`, o app usa mock local com o mesmo contrato de dados.
+Sem `EXPO_PUBLIC_JAVA_API_URL`, o app usa mock local.  
+**Deploy em nuvem (Azure) é responsabilidade da disciplina de DevOps** — este app só consome a URL.
+
 
 ## Publicação (pendente)
 
@@ -83,7 +90,7 @@ Nenhuma entrega foi feita com texto ou código gerado sem revisão.
 
 ## Próximos passos
 
-1. Subir API Java e apontar `EXPO_PUBLIC_JAVA_API_URL`
-2. Subir API .NET e apontar `EXPO_PUBLIC_DOTNET_API_URL`
-3. Configurar EAS + Firebase App Distribution
+1. Manter API Java no ar (`mvn spring-boot:run`) ao testar o app
+2. Trocar a URL quando o DevOps publicar no Azure
+3. API .NET (check-in) + Firebase App Distribution
 4. Gravar vídeo das funcionalidades

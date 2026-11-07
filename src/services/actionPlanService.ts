@@ -1,14 +1,17 @@
 import { USE_MOCK_APIS } from '@/constants/config';
 import { javaApi } from '@/services/apiClient';
+import { mapActionPlan } from '@/services/mappers';
 import { mockShelters } from '@/services/mockData';
 import type { ActionPlan, Occurrence } from '@/types/models';
 
 export async function generateActionPlan(occurrence: Occurrence): Promise<ActionPlan> {
   if (!USE_MOCK_APIS) {
-    const { data } = await javaApi.post<ActionPlan>('/ai/plano-acao', {
-      occurrenceId: occurrence.id,
+    const { data } = await javaApi.post('/ai/plano-acao', {
+      occurrenceId: Number(occurrence.id),
+      waterLevelCm: occurrence.waterLevelCm,
+      neighborhood: occurrence.neighborhood,
     });
-    return data;
+    return mapActionPlan(data);
   }
 
   const openShelter = mockShelters.find((s) => s.open);

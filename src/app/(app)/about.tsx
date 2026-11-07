@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { BrandMark } from '@/components/BrandMark';
 import { Screen } from '@/components/Screen';
-import { APP_COMMIT_HASH, TEAM, USE_MOCK_APIS } from '@/constants/config';
+import { APP_COMMIT_HASH, JAVA_API_URL, TEAM, USE_MOCK_APIS } from '@/constants/config';
 import { colors, spacing } from '@/theme/colors';
 
 export default function AboutScreen() {
@@ -18,7 +18,8 @@ export default function AboutScreen() {
           {APP_COMMIT_HASH}
         </Text>
         <Text style={styles.meta}>
-          Modo API: {USE_MOCK_APIS ? 'mock local (sem URL Java)' : 'Java/APIs remotas'}
+          Modo API:{' '}
+          {USE_MOCK_APIS ? 'mock local (sem URL Java)' : `Java conectada · ${JAVA_API_URL}`}
         </Text>
       </View>
 
