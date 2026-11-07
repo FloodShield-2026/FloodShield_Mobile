@@ -70,7 +70,16 @@ Sem `EXPO_PUBLIC_JAVA_API_URL`, o app usa mock local com o mesmo contrato de dad
 
 ## Uso de IA generativa
 
-Ferramentas de IA apoiaram scaffolding, revisão e organização do código. Todo o código foi revisado pelo grupo. A funcionalidade de plano de ação no produto usa IA generativa no backend Java (Spring AI + RAG), consumida por este app.
+> **IA como apoio ao time** — não substitui o entendimento nem a revisão humana.
+
+| Apoio | Como usamos |
+| --- | --- |
+| Pesquisa e organização | Estrutura de pastas, checklist da GS e rascunhos de README |
+| Scaffolding | Esqueleto inicial de telas, serviços e navegação |
+| Revisão | Leitura de erros, ajustes de TypeScript e inconsistências |
+
+Todo o código entregue foi **lido, testado e ajustado pelo grupo** antes do commit.  
+Nenhuma entrega foi feita com texto ou código gerado sem revisão.
 
 ## Próximos passos
 

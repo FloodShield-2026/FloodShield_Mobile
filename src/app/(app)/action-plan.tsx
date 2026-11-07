@@ -42,7 +42,7 @@ export default function ActionPlanScreen() {
   return (
     <Screen
       title="Plano de ação"
-      subtitle="Assistente integrado ao fluxo (Spring AI + RAG no backend Java)."
+      subtitle="Orientações com base no protocolo oficial e no nível da ocorrência."
       scroll
     >
       {loading || !plan ? (
