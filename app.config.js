@@ -50,6 +50,10 @@ module.exports = {
         root: 'src/app',
       },
       gitCommit: gitCommit(),
+      eas: {
+        projectId: '8b7b20a0-2cf3-4c94-8f51-e18418dbd946',
+      },
     },
+    owner: 'raphaelmancera010',
   },
 };
