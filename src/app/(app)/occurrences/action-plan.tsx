@@ -1,6 +1,7 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { PrimaryButton } from '@/components/PrimaryButton';
 import { Screen } from '@/components/Screen';
 import { useAuth } from '@/contexts/AuthContext';
 import * as actionPlanService from '@/services/actionPlanService';
@@ -13,26 +14,32 @@ export default function ActionPlanScreen() {
   const { user } = useAuth();
   const [plan, setPlan] = useState<ActionPlan | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
       if (!user) return;
+      setLoading(true);
+      setError(null);
       try {
         const list = await occurrenceService.listOccurrences(user.id);
         const occurrence =
-          list.find((item) => item.id === occurrenceId) ??
+          list.find((item) => item.id === String(occurrenceId)) ??
           list[0] ??
           {
-            id: 'local',
+            id: '0',
             title: 'Monitoramento geral',
             description: 'Sem ocorrência selecionada',
-            neighborhood: 'Zona Leste',
-            waterLevelCm: 25,
+            neighborhood: 'Penha',
+            waterLevelCm: 35,
             status: 'ABERTA' as const,
             createdAt: new Date().toISOString(),
             userId: user.id,
           };
         setPlan(await actionPlanService.generateActionPlan(occurrence));
+      } catch (err) {
+        setPlan(null);
+        setError(err instanceof Error ? err.message : 'Falha ao gerar o plano de ação.');
       } finally {
         setLoading(false);
       }
@@ -45,23 +52,30 @@ export default function ActionPlanScreen() {
       subtitle="Orientações com base no protocolo oficial e no nível da ocorrência."
       scroll
     >
-      {loading || !plan ? (
+      {loading ? (
         <ActivityIndicator color={colors.primary} />
-      ) : (
+      ) : error ? (
+        <View style={styles.card}>
+          <Text style={styles.summary}>Não foi possível gerar o plano</Text>
+          <Text style={styles.stepText}>{error}</Text>
+          <PrimaryButton label="Voltar" variant="ghost" onPress={() => router.back()} />
+        </View>
+      ) : plan ? (
         <View style={styles.card}>
           <Text style={styles.summary}>{plan.summary}</Text>
           {plan.shelterName ? (
             <Text style={styles.shelter}>Abrigo sugerido: {plan.shelterName}</Text>
           ) : null}
           {plan.steps.map((step, index) => (
-            <View key={step} style={styles.step}>
+            <View key={`${index}-${step}`} style={styles.step}>
               <Text style={styles.stepIndex}>{index + 1}</Text>
               <Text style={styles.stepText}>{step}</Text>
             </View>
           ))}
           <Text style={styles.meta}>Gerado em {new Date(plan.generatedAt).toLocaleString('pt-BR')}</Text>
+          <PrimaryButton label="Voltar" variant="ghost" onPress={() => router.back()} />
         </View>
-      )}
+      ) : null}
     </Screen>
   );
 }

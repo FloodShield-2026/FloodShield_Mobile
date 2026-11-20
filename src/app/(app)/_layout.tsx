@@ -88,7 +88,6 @@ export default function AppLayout() {
       <Tabs.Screen name="shelters" options={{ title: 'Abrigos' }} />
       <Tabs.Screen name="checkin" options={{ title: 'Check-in' }} />
       <Tabs.Screen name="about" options={{ title: 'Sobre' }} />
-      <Tabs.Screen name="action-plan" options={{ href: null, title: 'Plano de ação' }} />
     </Tabs>
   );
 }

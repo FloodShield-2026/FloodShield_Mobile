@@ -109,7 +109,7 @@ export default function OccurrenceDetailScreen() {
           variant="ghost"
           onPress={() =>
             router.push({
-              pathname: '/(app)/action-plan',
+              pathname: '/occurrences/action-plan',
               params: { occurrenceId: item.id },
             })
           }

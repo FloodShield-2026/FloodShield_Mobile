@@ -43,7 +43,7 @@ export default function HomeScreen() {
       <PrimaryButton
         label="Ver plano de ação"
         variant="ghost"
-        onPress={() => router.push('/(app)/action-plan')}
+        onPress={() => router.push('/occurrences/action-plan')}
       />
       <PrimaryButton
         label="Sair"

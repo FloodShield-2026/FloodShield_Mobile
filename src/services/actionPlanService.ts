@@ -6,8 +6,11 @@ import type { ActionPlan, Occurrence } from '@/types/models';
 
 export async function generateActionPlan(occurrence: Occurrence): Promise<ActionPlan> {
   if (!USE_MOCK_APIS) {
+    const occurrenceId = Number(occurrence.id);
     const { data } = await javaApi.post('/ai/plano-acao', {
-      occurrenceId: Number(occurrence.id),
+      ...(Number.isFinite(occurrenceId) && occurrenceId > 0
+        ? { occurrenceId }
+        : {}),
       waterLevelCm: occurrence.waterLevelCm,
       neighborhood: occurrence.neighborhood,
     });
