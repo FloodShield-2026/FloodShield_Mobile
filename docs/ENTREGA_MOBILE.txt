@@ -20,4 +20,6 @@ https://github.com/FloodShield-2026/FloodShield_Java
 E-mail do professor (leitor/colaborador no GitHub + tester no Firebase):
 profpietro.nunes@fiap.com.br
 
-Observação: convidar o professor como leitor no repositório e como tester no Firebase App Distribution.
+Status entrega:
+- GitHub: repositório público + convite Read pendente para o e-mail do professor
+- Firebase App Distribution: professor como tester; APK FloodShield.apk para release
