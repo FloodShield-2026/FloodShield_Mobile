@@ -1,0 +1,20 @@
+﻿FIAP — Global Solution 2026/2 — CitizenTech
+Disciplina: Mobile Application Development
+Grupo: FloodShield
+
+Integrantes:
+- Bruno Vinicius Barbosa — RM 566366
+- Guilherme de Andrade Martini — RM 566087
+- Nathan Gonçalves Pereira Mendes — RM 564666
+- Raphael Gomes Mancera — RM 562279
+
+Repositório GitHub (público):
+https://github.com/FloodShield-2026/FloodShield_Mobile
+
+Vídeo (YouTube, ≤ 5 min):
+https://youtube.com/shorts/PN0IJp2Mbsk
+
+API Java consumida pelo app:
+https://github.com/FloodShield-2026/FloodShield_Java
+
+Observação: o e-mail do professor deve ser adicionado como leitor/colaborador no repositório e como tester no Firebase App Distribution.

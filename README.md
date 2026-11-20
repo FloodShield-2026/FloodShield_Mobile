@@ -6,7 +6,11 @@
 
 App React Native (Expo) da CitizenTech **FloodShield** — Global Solution FIAP 2026/2.
 
-Repositório: https://github.com/FloodShield-2026/FloodShield_Mobile
+| Artefato | Link |
+| --- | --- |
+| Repositório | https://github.com/FloodShield-2026/FloodShield_Mobile |
+| Vídeo (YouTube) | https://youtube.com/shorts/PN0IJp2Mbsk |
+| API Java (consumida pelo app) | https://github.com/FloodShield-2026/FloodShield_Java |
 
 ## Equipe
 
@@ -20,7 +24,7 @@ Repositório: https://github.com/FloodShield-2026/FloodShield_Mobile
 ## O que este app cobre (Mobile Application Development)
 
 - Mínimo de **6 telas** com navegação (Expo Router)
-- **CRUD** de ocorrências via API Java (`Axios`) — mock local até a URL subir
+- **CRUD** de ocorrências via API Java (`Axios`)
 - **Autenticação** real (cadastro, login, logout, rotas protegidas)
 - Identidade visual FloodShield (logo, banner/hero, paleta escura + ciano)
 - Arquitetura em pastas: `app`, `components`, `services`, `contexts`, `theme`
@@ -48,7 +52,7 @@ npm install
 npx expo start
 ```
 
-Conta demo (mock): `cidadao@floodshield.app` / `123456`
+Conta demo: `cidadao@floodshield.app` / `123456`
 
 ### Variáveis de ambiente
 
@@ -58,16 +62,18 @@ Copie `.env.example` para `.env`:
 # Local enquanto a API Java roda na sua máquina
 EXPO_PUBLIC_JAVA_API_URL=http://localhost:8080
 
-# Quando o DevOps publicar no Azure, troque pela URL pública
+# Quando o DevOps publicar a API Java no Azure, troque pela URL pública
 # EXPO_PUBLIC_JAVA_API_URL=https://floodshield-api.azurewebsites.net
 
-EXPO_PUBLIC_DOTNET_API_URL=
-EXPO_PUBLIC_GIT_COMMIT=<sha>
+# API .NET (check-in) — quando existir
+# EXPO_PUBLIC_DOTNET_API_URL=https://app-floodshield-doacoes.azurewebsites.net
+
+EXPO_PUBLIC_GIT_COMMIT=<sha-do-commit>
 ```
 
 Sem `EXPO_PUBLIC_JAVA_API_URL`, o app usa mock local.  
+Na avaliação, a API Java precisa estar no ar.  
 **Deploy em nuvem (Azure) é responsabilidade da disciplina de DevOps** — este app só consome a URL.
-
 
 ## Integração multidisciplinar
 
@@ -78,6 +84,12 @@ Sem `EXPO_PUBLIC_JAVA_API_URL`, o app usa mock local.
 | **DevOps** | Azure DevOps + API publicada → https://dev.azure.com/RM566366/GS%202026%20-%20FloodShield |
 | **IA** | Plano de ação no fluxo (`/ai/plano-acao` na API Java) |
 
+## Vídeo
+
+Link público (YouTube): **https://youtube.com/shorts/PN0IJp2Mbsk**
+
+Demonstra autenticação, navegação, CRUD de ocorrências, plano de ação, abrigos e demais fluxos do app.
+
 ## Checklist Mobile (enunciado GS)
 
 - [x] ≥ 6 telas + Expo Router
@@ -86,27 +98,18 @@ Sem `EXPO_PUBLIC_JAVA_API_URL`, o app usa mock local.
 - [x] Estilização / identidade FloodShield
 - [x] Arquitetura em pastas
 - [x] Tela Sobre com hash do commit
-- [ ] **Vídeo ≤ 5 min** no YouTube (link no README + .txt)
+- [x] **Vídeo ≤ 5 min** no YouTube → https://youtube.com/shorts/PN0IJp2Mbsk
 - [ ] **Firebase App Distribution** (professor como tester)
 - [ ] E-mail do professor como leitor/colaborador no GitHub
-- [ ] .txt de entrega no Portal (grupo, nomes, link vídeo, link repo)
+- [x] .txt de entrega (grupo, nomes, link vídeo, link repo) em `docs/`
 
-## Uso de IA generativa
+## Uso de IA generativa (declaração do time)
 
-> **IA como apoio ao time** — não substitui o entendimento nem a revisão humana.
-
-| Apoio | Como usamos |
-| --- | --- |
-| Pesquisa e organização | Estrutura de pastas, checklist da GS e rascunhos de README |
-| Scaffolding | Esqueleto inicial de telas, serviços e navegação |
-| Revisão | Leitura de erros, ajustes de TypeScript e inconsistências |
-
-Todo o código entregue foi **lido, testado e ajustado pelo grupo** antes do commit.  
-Nenhuma entrega foi feita com texto ou código gerado sem revisão.
+A IA generativa foi usada **apenas como apoio de estudo** (dúvidas, organização de ideias e revisão de conceitos).  
+Não substitui o aprendizado nem a responsabilidade do grupo: o código entregue foi desenvolvido, testado e validado pelos integrantes.
 
 ## Próximos passos
 
-1. Manter API Java no ar (`mvn spring-boot:run`) ao testar o app
-2. Trocar a URL quando o DevOps publicar no Azure
-3. API .NET (check-in) + Firebase App Distribution
-4. Gravar vídeo das funcionalidades
+1. Firebase App Distribution + e-mail do professor como tester  
+2. Adicionar o professor como leitor no GitHub  
+3. Enviar o zip/txt no Portal do Aluno
