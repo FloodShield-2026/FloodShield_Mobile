@@ -99,8 +99,8 @@ Demonstra autenticação, navegação, CRUD de ocorrências, plano de ação, ab
 - [x] Arquitetura em pastas
 - [x] Tela Sobre com hash do commit
 - [x] **Vídeo ≤ 5 min** no YouTube → https://youtube.com/shorts/PN0IJp2Mbsk
-- [ ] **Firebase App Distribution** (professor como tester)
-- [ ] E-mail do professor como leitor/colaborador no GitHub
+- [x] **Firebase App Distribution** — tester `profpietro.nunes@fiap.com.br` + APK gerado (EAS)
+- [x] E-mail do professor como leitor/colaborador no GitHub (convite pendente)
 - [x] .txt de entrega (grupo, nomes, link vídeo, link repo) em `docs/`
 
 ## Uso de IA generativa (declaração do time)
@@ -108,8 +108,14 @@ Demonstra autenticação, navegação, CRUD de ocorrências, plano de ação, ab
 A IA generativa foi usada **apenas como apoio de estudo** (dúvidas, organização de ideias e revisão de conceitos).  
 Não substitui o aprendizado nem a responsabilidade do grupo: o código entregue foi desenvolvido, testado e validado pelos integrantes.
 
+## Build / Firebase
+
+- EAS project: https://expo.dev/accounts/raphaelmancera010/projects/floodshield-mobile  
+- APK preview (EAS): https://expo.dev/accounts/raphaelmancera010/projects/floodshield-mobile/builds/d8cc54b6-5e34-448d-b103-dfe0d45752a4  
+- Firebase: projeto `floodshield-e6de7` · package `br.fiap.floodshield`  
+- Tester: `profpietro.nunes@fiap.com.br`
+
 ## Próximos passos
 
-1. Firebase App Distribution + e-mail do professor como tester  
-2. Adicionar o professor como leitor no GitHub  
-3. Enviar o zip/txt no Portal do Aluno
+1. Confirmar release do APK no Firebase App Distribution (marcar o professor)  
+2. Enviar o zip/txt no Portal do Aluno
