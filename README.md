@@ -69,11 +69,27 @@ Sem `EXPO_PUBLIC_JAVA_API_URL`, o app usa mock local.
 **Deploy em nuvem (Azure) é responsabilidade da disciplina de DevOps** — este app só consome a URL.
 
 
-## Publicação (pendente)
+## Integração multidisciplinar
 
-- Firebase App Distribution (professor como tester)
-- E-mail do professor como leitor no GitHub
-- Vídeo ≤ 5 min no YouTube
+| Disciplina | Como o Mobile se liga |
+| --- | --- |
+| **Java Advanced** | CRUD + auth + plano de ação via `EXPO_PUBLIC_JAVA_API_URL` → https://github.com/FloodShield-2026/FloodShield_Java |
+| **.NET** | Check-in / doações com `Idempotency-Key` → https://github.com/brunovb002/floodshield-doacoes |
+| **DevOps** | Azure DevOps + API publicada → https://dev.azure.com/RM566366/GS%202026%20-%20FloodShield |
+| **IA** | Plano de ação no fluxo (`/ai/plano-acao` na API Java) |
+
+## Checklist Mobile (enunciado GS)
+
+- [x] ≥ 6 telas + Expo Router
+- [x] CRUD via API Java (Axios) — API precisa estar no ar na avaliação
+- [x] Auth (cadastro, login, logout, rotas protegidas)
+- [x] Estilização / identidade FloodShield
+- [x] Arquitetura em pastas
+- [x] Tela Sobre com hash do commit
+- [ ] **Vídeo ≤ 5 min** no YouTube (link no README + .txt)
+- [ ] **Firebase App Distribution** (professor como tester)
+- [ ] E-mail do professor como leitor/colaborador no GitHub
+- [ ] .txt de entrega no Portal (grupo, nomes, link vídeo, link repo)
 
 ## Uso de IA generativa
 
